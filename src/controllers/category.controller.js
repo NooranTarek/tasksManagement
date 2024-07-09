@@ -13,6 +13,13 @@ const getCategory = catchAsyncErr(async (req, res) => {
     res.status(200).json({ message: "Category retrieved successfully", category });
   });
 
+  const getAllCategories = catchAsyncErr(async (req, res) => {
+    const categories = await Category.find();
+    if (!categories) {
+      return res.status(404).json({ message: "Categories not found" });
+    }
+    res.status(200).json({ message: "Categories retrieved successfully", categories });
+  });
 
 const createCategory = catchAsyncErr(async (req, res) => {
     const {categoryName}=req.body;
@@ -45,4 +52,5 @@ const updateCategory = catchAsyncErr(async (req, res) => {
     }
     res.status(200).json({ message: "Category deleted successfully", category });
   });
-export {createCategory,getCategory,updateCategory,deleteCategory};
+
+export {createCategory,getCategory,updateCategory,deleteCategory,getAllCategories};
