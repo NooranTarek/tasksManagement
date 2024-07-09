@@ -21,4 +21,17 @@ const createCategory = catchAsyncErr(async (req, res) => {
     res.json({message:"You added new category",newCategory})
 })
 
-export {createCategory,getCategory};
+const updateCategory = catchAsyncErr(async (req, res) => {
+    const { categoryId } = req.query;
+    const { categoryName } = req.body;
+    const updatedCategory = await Category.findByIdAndUpdate(
+      categoryId,
+      { categoryName },
+      { new: true }
+    );
+    if (!updatedCategory) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    res.status(200).json({ message: "Category updated successfully", updatedCategory });
+  });
+export {createCategory,getCategory,updateCategory};
