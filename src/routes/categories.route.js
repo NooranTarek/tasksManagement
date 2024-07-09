@@ -4,7 +4,7 @@ import { isAuthenticated } from "../middlewares/authentication.js";
 
 
 const categoryRouter=express.Router();
-
+categoryRouter.get('',isAuthenticated,categoryController.getCategory);
 categoryRouter.post('',isAuthenticated,categoryController.createCategory);
 
 
