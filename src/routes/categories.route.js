@@ -7,6 +7,7 @@ const categoryRouter=express.Router();
 categoryRouter.get('',isAuthenticated,categoryController.getCategory);
 categoryRouter.post('',isAuthenticated,categoryController.createCategory);
 categoryRouter.put('',isAuthenticated,categoryController.updateCategory);
+categoryRouter.delete('',isAuthenticated,categoryController.deleteCategory);
 
 
 export default categoryRouter;

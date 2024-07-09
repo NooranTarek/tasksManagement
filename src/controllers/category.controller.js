@@ -34,4 +34,15 @@ const updateCategory = catchAsyncErr(async (req, res) => {
     }
     res.status(200).json({ message: "Category updated successfully", updatedCategory });
   });
-export {createCategory,getCategory,updateCategory};
+
+  const deleteCategory = catchAsyncErr(async (req, res) => {
+    const { categoryId } = req.query;
+    const category = await Category.findByIdAndDelete(
+      categoryId,
+    );
+    if (!category) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    res.status(200).json({ message: "Category deleted successfully", category });
+  });
+export {createCategory,getCategory,updateCategory,deleteCategory};
