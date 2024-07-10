@@ -7,7 +7,7 @@ const taskSchema= new mongoose.Schema({
         type:Schema.Types.ObjectId,
         ref:"Category"
     },
-    CreatedBy:{
+    createdBy:{
         type:Schema.Types.ObjectId,
         ref:"User"
     },
