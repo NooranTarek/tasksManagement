@@ -14,10 +14,12 @@ const getCategory = catchAsyncErr(async (req, res) => {
   });
 
   const getAllCategories = catchAsyncErr(async (req, res) => {
-    const categories = await Category.find();
-    if (!categories) {
-      return res.status(404).json({ message: "Categories not found" });
-    }
+    const ownedBy=req.user.user._id;
+    const categories = await Category.find({ownedBy});
+
+    if (!categories || categories.length === 0) {
+        return res.status(404).json({ message: "Categories not found" });
+      }
     res.status(200).json({ message: "Categories retrieved successfully", categories });
   });
 
