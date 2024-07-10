@@ -29,7 +29,16 @@ const getTask = catchAsyncErr(async (req, res) => {
     res.status(200).json({ message: "Task retrieved successfully", task });
   });
 
+const getUserTasks = catchAsyncErr(async (req, res) => {
+    const createdBy = req.user.user._id;
+    const task = await Task.find({createdBy});
+    if (!task) {
+      return res.status(404).json({ message: "Tasks not found" });
+    }
+    res.status(200).json({ message: "Tasks retrieved successfully", task });
+  });
 export {
     createTask,
-    getTask
+    getTask,
+    getUserTasks
 }

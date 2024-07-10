@@ -7,6 +7,7 @@ const taskRouter=express.Router();
 
 taskRouter.post('',isAuthenticated,taskController.createTask);
 taskRouter.get('',isAuthenticated,taskController.getTask);
+taskRouter.get('/all',isAuthenticated,taskController.getUserTasks);
 
 
 export default taskRouter;
