@@ -12,16 +12,19 @@ const getCategory = catchAsyncErr(async (req, res) => {
     }
     res.status(200).json({ message: "Category retrieved successfully", category });
   });
-
+  
   const getAllCategories = catchAsyncErr(async (req, res) => {
-    const ownedBy=req.user.user._id;
-    const categories = await Category.find({ownedBy});
-
+    const ownedBy = req.user.user._id;
+    const categories = res.paginatedResults.results.filter(category => category.ownedBy.equals(ownedBy));
     if (!categories || categories.length === 0) {
         return res.status(404).json({ message: "Categories not found" });
-      }
-    res.status(200).json({ message: "Categories retrieved successfully", categories });
-  });
+    }
+    res.status(200).json({
+        message: "Categories retrieved successfully",
+        categories,
+        pagination: res.paginatedResults.pagination
+    });
+});
 
 const createCategory = catchAsyncErr(async (req, res) => {
     const {categoryName}=req.body;

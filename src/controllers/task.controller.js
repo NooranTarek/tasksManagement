@@ -29,14 +29,19 @@ const getTask = catchAsyncErr(async (req, res) => {
     res.status(200).json({ message: "Task retrieved successfully", task });
   });
 
-const getUserTasks = catchAsyncErr(async (req, res) => {
+  const getUserTasks = catchAsyncErr(async (req, res) => {
     const createdBy = req.user.user._id;
-    const task = await Task.find({createdBy});
-    if (!task) {
-      return res.status(404).json({ message: "Tasks not found" });
+    const tasks = res.paginatedResults.results.filter(task => task.createdBy.equals(createdBy));
+    if (!tasks || tasks.length === 0) {
+        return res.status(404).json({ message: "Tasks not found" });
     }
-    res.status(200).json({ message: "Tasks retrieved successfully", task });
-  });
+    res.status(200).json({
+        message: "Tasks retrieved successfully",
+        tasks,
+        pagination: res.paginatedResults.pagination
+    });
+});
+
 
   const updateTask = catchAsyncErr(async (req, res) => {
     const { taskId } = req.params;
