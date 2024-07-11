@@ -14,6 +14,7 @@ const taskSchema= new mongoose.Schema({
     title: String,
     type: { type: String, enum: ['text', 'list'] },
     content: String,
+    contentList:[{ text: String , _id: false}],
     isShared: Boolean
 })
 
